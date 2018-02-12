@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付成功</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <meta name="apple-itunes-app" content="app-id=">
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      font-size: 0.36rem;
+      color: #4A4A4A;
+      text-align: center;
+      line-height: 1.2rem;
+      height: 0.9rem;
+      overflow: hidden;
+      padding: 0 0.3rem;
+    }
+    nav em{
+      width: 0.23rem;
+      height: 0.43rem;
+      background: url("imgs/back.png") no-repeat center;
+      background-size: 100% 100%;
+      display: inline-block;
+      float: left;
+      margin-top: 0.4rem;
+      cursor: pointer;
+    }
+    img{
+      width: 0.9rem;
+      height: 0.9rem;
+      display: block;
+      margin: 0 auto;
+      margin-top: 3rem;
+    }
+    h1{
+      font-family: HiraginoSansGB-W6;
+      font-size: 0.4rem;
+      color: #F5A623;
+      line-height: 0.6rem;
+      font-weight: bold;
+      margin-top: 0.23rem;
+      text-align: center;
+    }
+    .countDown {
+      margin: 0.2rem 0 0.3rem;
+      font-size: 0.36rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<nav><em class='goback'></em>支付成功</nav>
+<img src="./imgs/pay.png"/>
+<h1>支付成功</h1>
+<p class=countDown>3s</p>
+</body>
+<script>
+  function windowChange () {
+    var deviceWidth = document.documentElement.clientWidth;
+    if (deviceWidth > 750) {
+      document.documentElement.style.fontSize = 750 / 7.5 + 'px';
+    } else {
+      document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+    }
+  }
+
+  (function () {
+    document.addEventListener('DOMContentLoaded', function () {
+      windowChange()
+    }, false)
+
+    window.onresize = function () {
+      windowChange()
+    }
+  })()
+
+</script>
+<script>
+  window.onload = function () {
+    var url = 'https://demo.easyto.com/#/'
+    function GetQueryString (name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)")
+      var r = window.location.search.substr(1).match(reg)
+      if (r != null)return unescape(r[2])
+      return null
+    }
+    if (localStorage.getItem('token') === null || localStorage.getItem('token') === 'null' || localStorage.getItem('token') === undefined || localStorage.getItem('token') === 'undefined') {
+      var userId = GetQueryString('userId')
+      var deviceId = GetQueryString('deviceId')
+      var token = GetQueryString('token')
+      var uuid = GetQueryString('uuid')
+      var mobile = GetQueryString('mobile')
+      localStorage.setItem('token', token)
+      localStorage.setItem('userId', userId)
+      localStorage.setItem('deviceId', deviceId)
+      localStorage.setItem('mobile', mobile)
+      localStorage.setItem('uuid', uuid)
+    }
+    var time = 3
+    var timer = setInterval(function () {
+      if (time > 0) {
+        time -= 1
+        document.getElementsByClassName('countDown')[0].innerHTML = time + 's'
+      } else {
+        clearInterval(timer)
+        /* window.location.href = url */
+        return
+      }
+    }, 1000)
+    document.getElementsByClassName('goback')[0].onclick = function () {
+      window.location.href = url
+    }
+  }
+</script>
+</html>
